@@ -28,6 +28,5 @@
     "nodemon": "^3.1.7",
     "sequelize": "^6.35.1",
     "twilio": "^4.19.0"
-  },
-  "devDependencies": {}
+  }
 }

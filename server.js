@@ -1,32 +1,39 @@
 const path = require('path');
 const cors = require("cors");
-var express = require('express')
-var bodyParser = require('body-parser')
+const express = require('express');
+const bodyParser = require('body-parser');
+const multer = require('multer');
 
-var app = express()
-app.use(bodyParser.urlencoded({ extended: false }))
+const app = express();
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: false }));
 
-// parse application/json
-app.use(bodyParser.json())
+
+app.use('/uploads', express.static('uploads'));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+// Define the port
+const Port = 3000;
+
+// Parse application/json
+app.use(bodyParser.json());
 
 //================= Cors ===================//
-
 const corsOpts = {
-    origin: "*",
-    methods: ["GET", "PATCH", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type"],
-  };
-  app.use(cors(corsOpts));
+  origin: "*",
+  methods: ["GET", "PATCH", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type"],
+};
+app.use(cors(corsOpts));
 
-app.get('',(req,res)=>{
-    res.send("Shaurya is Ready to go")
-})
+app.get('', (req, res) => {
+  res.send("Shaurya is Ready to go");
+});
 
-const db = require("./IndexFiles/modelsIndex");
-const Role = db.role; 
 
-//========== DB Sync ==========//
 
+// DB import and sync (if needed in the future)
+// const db = require("./IndexFiles/modelsIndex");
 // db.sequelize.sync()
 //   .then(() => {
 //     console.log("Synced db success...");
@@ -34,25 +41,11 @@ const Role = db.role;
 //     console.log("Failed to sync db...", err.message)
 //   });
 
-  
-//============ Express ===========//
-
-app.get("/", (req, res) => {
-    res.json({ message: "Welcome to the ERP Back-End!" });
-  });
-  
-  db.sequelize.sync()          
-    .then(() => {  
-    console.log("Synced db success...");
-    }).catch((err) => {
-    console.log("Failed to sync db...", err.message)
-    }) 
-
-const Port =3000
-app.listen(Port,()=>{
-    console.log(`service is running on the port number ${Port}`)
-})
-  
-
 //================= Router ==================//
 require('./APIs/admin/routes/admin.routes')(app);
+require('./APIs/product/router/productRouter')(app);
+
+// Server listen
+app.listen(Port, () => {
+  console.log(`Service is running on port number ${Port}`);
+});

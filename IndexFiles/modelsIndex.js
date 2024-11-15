@@ -24,9 +24,11 @@ db.sequelize = sequelize;
 
 /////////////////////   model   ////////////////////
 db.tbl_admin = require('../APIs/admin/models/admin.model')(sequelize, Sequelize);
+db.product = require('../APIs/product/model/productModel')(sequelize,Sequelize);
 
 
-// *****************************************************************
-
+// *********************Foreign Keys********************************************
+db.tbl_admin.hasMany(db.product, { foreignKey: 'user_id' })
+db.product.belongsTo(db.tbl_admin, { foreignKey: 'user_id' })
 
 module.exports = db;

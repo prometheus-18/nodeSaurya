@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-  const tbl_admin = sequelize.define("tbl_admin", {
+  const tbl_admin = sequelize.define("ADMINS", {
     email: {
       type: Sequelize.STRING
     },

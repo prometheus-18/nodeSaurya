@@ -3,8 +3,8 @@ console.log("Welcome")
 module.exports = {
   HOST: "127.0.0.1",
   USER: "root",
-  PASSWORD: "root",
-  DB: "user_db",
+  PASSWORD: "Mindz@1234",
+  DB: "car_db",
   dialect: "mysql",
   logging: false,
   camelCase: true, 
